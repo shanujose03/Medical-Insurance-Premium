@@ -1,0 +1,37 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repo
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Log in to DockerHub
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      # Step 3: Build Docker image and tag
+      - name: Build Docker image
+        run: |
+          # Build image with commit SHA tag
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/medical-insurance:${{ github.sha }} .
+
+          # Tag the same image as 'latest'
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/medical-insurance:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/medical-insurance:latest
+
+      # Step 4: Push Docker image to DockerHub
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/medical-insurance:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/medical-insurance:latest
