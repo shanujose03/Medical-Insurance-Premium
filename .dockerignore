@@ -1,25 +1,30 @@
-# Python cache
+# Ignore virtual environment
+venv/
+.env
+ENV/
+
+data.csv
+insurance.csv
+sampleImages/
+
+# Ignore Python cache
 __pycache__/
 *.pyc
 *.pyo
 
-# Git
+# Ignore logs and temp files
+*.log
+*.tmp
+*.bak
+
+# Ignore IDE/editor config
+.vscode/
+.idea/
+
+# Ignore git metadata
 .git
 .gitignore
 
-# Jupyter notebooks
-*.ipynb
-*.ipynb_checkpoints
-
-# Data / Large files
-data/
-*.csv
-*.h5
-*.pkl
-
-# Logs
-*.log
-
-# Temporary / system files
-*.swp
-*.DS_Store
+# Ignore system files
+.DS_Store
+Thumbs.db
