@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Copy and install dependencies first (good for caching)
 COPY requirements.txt .
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy only essential app files
@@ -21,5 +22,6 @@ EXPOSE 5000
 
 # Run the app
 CMD ["python", "app.py"]
+
 
 
