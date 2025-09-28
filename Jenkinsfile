@@ -42,5 +42,17 @@ pipeline {
                 }
             }
         }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    sh """
+                        docker stop medical-container || true
+                        docker rm medical-container || true
+                        docker run -d -p 5000:5000 --name medical-container ${IMAGE_NAME}:${IMAGE_TAG}
+                    """
+                }
+            }
+        }
     }
 }
